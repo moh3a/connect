@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sql.h>
 #include <sqlext.h>
+#include <string.h>
 
 /*
 Once you have a connection handle you can connect to your ODBC driver or data source using SQLDriverConnect (ODBC 2 applications use SQLConnect but this is much less flexible). Connecting to your ODBC driver is perhaps one of the largest subjects in ODBC as SQLDriverConnect can be called in many different ways; this introductory tutorial will cover the simplest case of connecting to a named data source you have already created and further tutorials will expand on this.
@@ -20,9 +21,9 @@ void connect(SQLHENV environment_handle, SQLHDBC connection_handle, char *dsn)
     - UID/PWD - any username and password the database requires for authentication.
     - SAVEFILE - request the DSN attributes are saved in this file.
     */
-    char connection_string[100] = "DSN=";
+    char *connection_string = "DSN=";
     strcat(connection_string, dsn);
-    strcat(connection_string, ';');
+    strcat(connection_string, ";");
 
     /* Allocate an environment handle */
     SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &environment_handle);
@@ -34,7 +35,7 @@ void connect(SQLHENV environment_handle, SQLHDBC connection_handle, char *dsn)
     ret = SQLDriverConnect(
         connection_handle,
         NULL,
-        connection_string,
+        (SQLCHAR *)connection_string,
         SQL_NTS,
         outstr,
         sizeof(outstr),

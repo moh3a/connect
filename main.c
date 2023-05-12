@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <sql.h>
+#include <sqlext.h>
+#include <string.h>
 
-#include "connect.c";
+#include "connect.c"
 
 /*
 This is the first handle you will need as everything else is effectively in the environment. Once you have an environment handle you can define the version of ODBC you require, enable connection pooling and allocate connection handles with SQLSetEnvAttr and SQLAllocHandle.
